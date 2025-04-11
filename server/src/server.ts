@@ -13,6 +13,11 @@ import { authenticateToken } from './services/auth-service.js';
 import { typeDefs, resolvers } from './schemas/index.js';
 import db from './config/connection.js';
 
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
@@ -37,10 +42,10 @@ const startApolloServer = async () => {
   ));
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
 
     app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
     });
   }
 
